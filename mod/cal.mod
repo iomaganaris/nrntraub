@@ -13,7 +13,7 @@ UNITS {
 }
  
 NEURON { 
-	SUFFIX traub_cal
+	SUFFIX cal
 	USEION ca WRITE ica
 	RANGE  gbar, ica
 	RANGE alpha, beta : added to write rates for comparison with F
