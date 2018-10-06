@@ -99,17 +99,20 @@ proc want_all_spikes() {local i, gid
 }
 
 proc spike2file() { localobj outf, s
-	s = new String()
-	sprint(s.s, "out%d.dat", pnm.nhost)
-        outf = new File()
-        if (pc.id == 0) {outf.wopen(s.s) outf.close } // start new file
-	for pnm.serialize() {
-		outf.aopen(s.s)
-	        for i=0, pnm.idvec.size-1 {
-        	        outf.printf("%g\t%d\n", pnm.spikevec.x[i], pnm.idvec.x[i])
-	        }
-	        outf.close
-	}
+    if (use_coreneuron) {
+        return
+    }
+    s = new String()
+    sprint(s.s, "out%d.dat", pnm.nhost)
+    outf = new File()
+    if (pc.id == 0) {outf.wopen(s.s) outf.close } // start new file
+    for pnm.serialize() {
+        outf.aopen(s.s)
+        for i=0, pnm.idvec.size-1 {
+            outf.printf("%g\t%d\n", pnm.spikevec.x[i], pnm.idvec.x[i])
+        }
+        outf.close
+    }
 }
 
 par_ncell_ = 0
@@ -182,7 +185,13 @@ pc.nrnbbcore_write("coredat")
 	}else if (savestatetest == 2) {
 		restorestate()
 	}
+    if (use_coreneuron) {
+        strdef arg
+        sprint(arg, "--tstop %lf --voltage 1000", tstop)
+        pc.nrncore_run(arg)
+    } else {
         pnm.psolve(tstop)
+    }
         tdat_.x[0] = pnm.pc.wait_time - tdat_.x[0]
         runtime = startsw() - runtime
         tdat_.x[1] = pnm.pc.step_time

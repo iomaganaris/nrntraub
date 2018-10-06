@@ -60,7 +60,9 @@ steps_per_ms = 40
 dt = .025
 secondorder = 2
 default_var("mytstop", 1000)
+default_var("coreneuron", 0)
 tstop = mytstop
+use_coreneuron = coreneuron
 
 
 //{load_file("balanal.hoc")}
@@ -72,9 +74,11 @@ if (0) { pc.runworker()  pc.done() quit() }
 
 prun()
 
-strdef zz
-sprint(zz, "t%g", t)
-pc.prcellstate(41, zz)
+if (!use_coreneuron) {
+    strdef zz
+    sprint(zz, "t%g", t)
+    pc.prcellstate(41, zz)
+}
 
 //if (pc.nhost >= 128) {balanalfile("balanal.dat")}
 
