@@ -175,10 +175,10 @@ tdat_ = new Vector(6)
 proc prun() {
 	pc.setup_transfer()
         pnm.set_maxstep(10)
-        runtime=startsw()
         tdat_.x[0] = pnm.pc.wait_time
         stdinit()
-pc.nrnbbcore_write("coredat")
+        runtime=startsw()
+    //pc.nrnbbcore_write("coredat")
 	if (savestatetest == 1) {
 		pnm.psolve(tstop/2)
 		savestate()
@@ -191,6 +191,9 @@ pc.nrnbbcore_write("coredat")
         pc.nrncore_run(arg)
     } else {
         pnm.psolve(tstop)
+        if (pnm.myid == 0) {
+            printf("Solver Time : %lf\n", startsw() - runtime)
+        }
     }
         tdat_.x[0] = pnm.pc.wait_time - tdat_.x[0]
         runtime = startsw() - runtime
