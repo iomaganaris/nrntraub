@@ -97,7 +97,7 @@ proc pcs() {local spgid
 
 spike2file()
 
-if (pc.nhost > 5) {cvode_active(1)} // to count equations
+if (pc.nhost > 5 && !use_coreneuron) {cvode_active(1)} // to count equations
 {pc.runworker()}
 
 print "Maximum integration interval: ", mindelay()
