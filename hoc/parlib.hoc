@@ -178,7 +178,7 @@ proc prun() {
         tdat_.x[0] = pnm.pc.wait_time
         stdinit()
         runtime=startsw()
-    pc.nrnbbcore_write("coredat")
+    //pc.nrnbbcore_write("coredat")
 	if (savestatetest == 1) {
 		pnm.psolve(tstop/2)
 		savestate()
