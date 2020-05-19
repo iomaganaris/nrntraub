@@ -50,7 +50,7 @@ proc par_netstim_create() {local gid  localobj cell, syn, nc, ns, r
 		netstims.append(ns)
 		nc = new NetCon(ns.pp, syn)
 		netstim_netcons.append(nc)
-		nc.delay = 0
+		nc.delay = 1
 		r = new Random()
 		r.negexp(1)
 //		r.Isaac64(netstim_random_seedoffset + netstim_base_)

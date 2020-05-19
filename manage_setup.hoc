@@ -77,7 +77,7 @@ proc progress() {
 	cvode.event(t+1, "progress()")
 }
 
-if (nthread > 1 && pc.nhost == 1) { pc.nthread(nthread, 1) }
+if (nthread > 1) { pc.nthread(nthread, 1) }
 
 if (use_traubexact) {
 	localloadfile("hoc/traubcon_net.hoc")
